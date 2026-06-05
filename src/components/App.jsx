@@ -8,6 +8,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [toys, setToys] = useState([]);
 
+  // GET all toys on page load
   useEffect(() => {
     fetch("http://localhost:3001/toys")
       .then((res) => res.json())
@@ -15,13 +16,19 @@ function App() {
   }, []);
 
   function handleClick() {
-    setShowForm((showForm) => !showForm);
+    setShowForm((prev) => !prev);
+  }
+
+  // ADD toy (used by ToyForm)
+  function handleAddToy(newToy) {
+    setToys((prevToys) => [...prevToys, newToy]);
   }
 
   return (
     <>
       <Header />
-      {showForm ? <ToyForm /> : null}
+
+      {showForm ? <ToyForm onAddToy={handleAddToy} /> : null}
 
       <div className="buttonContainer">
         <button onClick={handleClick}>Add a Toy</button>
