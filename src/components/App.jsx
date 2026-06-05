@@ -8,7 +8,7 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [toys, setToys] = useState([]);
 
-  // GET all toys on page load
+  // GET all toys
   useEffect(() => {
     fetch("http://localhost:3001/toys")
       .then((res) => res.json())
@@ -21,13 +21,20 @@ function App() {
 
   // ADD toy
   function handleAddToy(newToy) {
-    setToys((prevToys) => [...prevToys, newToy]);
+    setToys((prev) => [...prev, newToy]);
   }
 
   // DELETE toy
   function handleDeleteToy(id) {
-    setToys((prevToys) =>
-      prevToys.filter((toy) => toy.id !== id)
+    setToys((prev) => prev.filter((toy) => toy.id !== id));
+  }
+
+  // UPDATE toy (LIKE)
+  function handleUpdateToy(updatedToy) {
+    setToys((prev) =>
+      prev.map((toy) =>
+        toy.id === updatedToy.id ? updatedToy : toy
+      )
     );
   }
 
@@ -44,6 +51,7 @@ function App() {
       <ToyContainer
         toys={toys}
         onDeleteToy={handleDeleteToy}
+        onUpdateToy={handleUpdateToy}
       />
     </>
   );
