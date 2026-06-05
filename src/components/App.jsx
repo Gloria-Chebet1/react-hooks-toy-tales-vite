@@ -19,9 +19,16 @@ function App() {
     setShowForm((prev) => !prev);
   }
 
-  // ADD toy (used by ToyForm)
+  // ADD toy
   function handleAddToy(newToy) {
     setToys((prevToys) => [...prevToys, newToy]);
+  }
+
+  // DELETE toy
+  function handleDeleteToy(id) {
+    setToys((prevToys) =>
+      prevToys.filter((toy) => toy.id !== id)
+    );
   }
 
   return (
@@ -34,7 +41,10 @@ function App() {
         <button onClick={handleClick}>Add a Toy</button>
       </div>
 
-      <ToyContainer toys={toys} />
+      <ToyContainer
+        toys={toys}
+        onDeleteToy={handleDeleteToy}
+      />
     </>
   );
 }
